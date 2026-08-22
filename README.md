@@ -2,16 +2,23 @@
 
 ## 1. Project Overview
 
-This project implements an intelligent customer support chatbot using **Amazon Bedrock Flows**, **AWS Lambda**, **Amazon DynamoDB**, **Amazon S3**, and **Amazon Bedrock Evaluations**.
+This project implements an intelligent customer support chatbot using
+**Amazon Bedrock Flows**, **AWS Lambda**, **Amazon DynamoDB**, **Amazon S3**,
+and **Amazon Bedrock Evaluations**.
 
-The chatbot automatically classifies incoming customer requests and routes them to the appropriate response path.
+The chatbot automatically classifies incoming customer requests and routes
+them to the appropriate response path.
 
 The implemented paths are:
 
-- **Bug Reports** — identifies software issues, collects the required bug information, invokes a Lambda function, and creates a bug-report record in DynamoDB.
+- **Bug Reports** — identifies software issues, collects the required bug
+  information, invokes a Lambda function, and integrates with DynamoDB for
+  bug-report persistence.
 - **Platform Questions** — answers questions covered by the embedded platform FAQ.
-- **Uncovered Platform Questions** — informs the customer when the requested information is not available in the FAQ and directs them to customer support.
-- **Other Requests** — handles requests outside the supported bug-report and FAQ categories and directs the customer to appropriate support.
+- **Uncovered Platform Questions** — informs the customer when the requested
+  information is not available in the FAQ and directs them to customer support.
+- **Other Requests** — handles requests outside the supported bug-report and FAQ
+  categories and directs the customer to appropriate support.
 
 The project also includes an automated testing and evaluation pipeline using:
 
