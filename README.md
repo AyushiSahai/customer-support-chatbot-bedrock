@@ -350,23 +350,20 @@ The results should be interpreted together with the individual flow execution tr
 
 ## 12. Evidence
 
-Screenshots demonstrating the implementation and testing are available in the `screenshots/` directory.
+Screenshots demonstrating the implementation and testing are available in the
+`screenshots/` directory.
 
 The evidence includes:
 
-- Complete Bedrock Flow diagram
-- Classifier configuration
-- Condition node configuration
-- Bug-report execution
-- Lambda execution trace
-- Bug-report output
+- Complete flow classification and routing
+- Bug-report execution trace
+- Bug-report Lambda execution trace
 - Platform FAQ response
 - Uncovered FAQ response
 - Other-request routing
-- Flow execution traces
-- Evaluation-related results
 
-These screenshots provide visual evidence of the implemented flow and its tested behavior.
+The screenshots provide visual evidence of the implemented flow and its tested
+behavior across the main request paths.
 
 ---
 
