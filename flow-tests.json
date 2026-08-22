@@ -1,0 +1,27 @@
+{
+  "flowInputNode": {
+    "nodeName": "FlowInputNode"
+  },
+  "tests": [
+    {
+      "id": "t1_bug_report",
+      "prompt": "The checkout button is not working. To reproduce it, I add an item to my cart, go to checkout, and click the checkout button, but nothing happens. Environment: Chrome browser on Windows 11 desktop.",
+      "expected": "The flow should classify the request as a bug report, collect the bug description, steps to reproduce, and environment, and create a bug report ticket."
+    },
+    {
+      "id": "t2_platform_question",
+      "prompt": "How do I reset my password?",
+      "expected": "The flow should answer the customer using the platform FAQ."
+    },
+    {
+      "id": "t3_platform_uncovered",
+      "prompt": "Can I change the color of a product after ordering?",
+      "expected": "The flow should state that the information is not available in the FAQ and direct the customer to support."
+    },
+    {
+      "id": "t4_other_request",
+      "prompt": "I would like to discuss a sponsorship partnership.",
+      "expected": "The flow should route the request to the appropriate human-support response."
+    }
+  ]
+}
