@@ -421,12 +421,11 @@ The implementation demonstrates:
 - Conditional routing
 - Bug-report information collection
 - Lambda-based backend processing
-- DynamoDB persistence
+- DynamoDB integration for bug-report persistence
 - FAQ-based response generation
 - Handling of unsupported requests
 - Automated flow testing
 - Evaluation dataset generation
 - Amazon S3 integration
 - Amazon Bedrock model evaluation
-
 The project combines **LLM-based routing with traditional AWS services** to create a structured customer-support workflow with testable and observable execution paths.
