@@ -12,8 +12,8 @@ them to the appropriate response path.
 The implemented paths are:
 
 - **Bug Reports** — identifies software issues, collects the required bug
-  information, invokes a Lambda function, and integrates with DynamoDB for
-  bug-report persistence.
+  information, invokes a Lambda function, and uses DynamoDB for bug-report
+  persistence.
 - **Platform Questions** — answers questions covered by the embedded platform FAQ.
 - **Uncovered Platform Questions** — informs the customer when the requested
   information is not available in the FAQ and directs them to customer support.
@@ -75,10 +75,10 @@ The project also includes an automated testing and evaluation pipeline using:
   Handles software problems and collects the information required to create a useful bug report.
 
 - **AWS Lambda**  
-  Processes the bug-report information and creates the bug-report record.
+  Processes the bug-report information and handles the backend ticket-creation workflow.
 
 - **Amazon DynamoDB**  
-  Stores bug-report records in the `BugReports` table.
+  Provides persistence for bug-report records in the `BugReports` table.
 
 - **Platform FAQ Prompt**  
   Uses the embedded FAQ content to answer supported platform questions.
@@ -96,7 +96,14 @@ The project also includes an automated testing and evaluation pipeline using:
 
 ## 3. Classification and Routing
 
-The classifier processes every incoming customer message and determines which path should handle the request.
+The classifier processes every incoming customer message and determines which
+path should handle the request.
+
+The supported routing categories are:
+
+- `BUG` — software problems and functional issues.
+- `PLATFORM_QUESTION` — questions that can be answered using the platform FAQ.
+- `OTHER` — requests outside the supported bug-report and FAQ categories.
 
 ### Bug Reports
 
@@ -123,7 +130,8 @@ The chatbot responds using the embedded FAQ information.
 
 ### Other Requests
 
-Requests outside the supported bug-report and FAQ categories are routed to the other-request response.
+Requests outside the supported bug-report and FAQ categories are routed to the
+other-request response.
 
 For example:
 
@@ -135,7 +143,8 @@ The chatbot responds by directing the customer toward appropriate support.
 
 ## 4. Bug Report Path
 
-The bug-report path is designed to collect the information required to create a useful bug report.
+The bug-report path is designed to collect the information required to create
+a useful bug report.
 
 The required information includes:
 
@@ -175,7 +184,8 @@ Lambda Function
 DynamoDB BugReports Table
 ```
 
-During testing, the flow successfully executed the Lambda function and returned a generated ticket ID and `OPEN` status.
+During testing, the flow successfully executed the Lambda function and returned
+a generated ticket ID and `OPEN` status.
 
 Example response:
 
@@ -186,7 +196,8 @@ Ticket ID: <generated-ticket-id>
 Status: OPEN
 ```
 
-The Bedrock Flow execution trace also showed the Lambda function node completing successfully.
+The Bedrock Flow execution trace showed the Lambda function node completing
+successfully and returning the ticket information.
 
 ---
 
@@ -202,7 +213,8 @@ Example:
 
 > How do I reset my password?
 
-The flow returned an FAQ-based response explaining that the customer can use the **Forgot password** link on the sign-in page.
+The flow returned an FAQ-based response explaining that the customer can use the
+**Forgot password** link on the sign-in page.
 
 ### Uncovered Question
 
@@ -210,29 +222,35 @@ Example:
 
 > Can I change the color of a product after ordering?
 
-When the requested information was not available in the FAQ, the flow directed the customer to contact support instead of inventing an answer.
+When the requested information was not available in the FAQ, the flow directed
+the customer to contact support instead of inventing an answer.
 
-This provides a separate path for questions that are outside the available FAQ information.
+This provides a separate path for questions that are outside the available FAQ
+information.
 
 ---
 
 ## 6. Other Request Path
 
-Requests that do not belong to the supported bug-report or FAQ categories are routed to the Other Request path.
+Requests that do not belong to the supported bug-report or FAQ categories are
+routed to the Other Request path.
 
 Example:
 
 > I would like to discuss a sponsorship partnership.
 
-The flow identifies the request as outside the normal support categories and returns a response directing the customer toward appropriate support.
+The flow identifies the request as outside the supported support categories and
+returns a response directing the customer toward appropriate support.
 
-This prevents unnecessary processing for requests that cannot be handled by the FAQ or bug-report workflow.
+This prevents requests that cannot be handled by the FAQ or bug-report workflow
+from being processed through those paths.
 
 ---
 
 ## 7. Testing
 
-The project uses `flow-tests.json` to define test scenarios for the major conversation paths.
+The project uses `flow-tests.json` to define test scenarios for the major
+conversation paths.
 
 The test scenarios include:
 
@@ -251,7 +269,8 @@ to my cart, go to checkout, and click the checkout button, but nothing
 happens. Environment: Chrome browser on Windows 11 desktop.
 ```
 
-The flow classified the request as a bug and successfully executed the bug-report path.
+The flow classified the request as a bug and successfully executed the
+bug-report path.
 
 #### Platform FAQ
 
@@ -267,7 +286,8 @@ The flow returned an answer based on the embedded FAQ.
 Can I change the color of a product after ordering?
 ```
 
-The flow determined that the information was not available in the FAQ and directed the customer to support.
+The flow determined that the information was not available in the FAQ and
+directed the customer to support.
 
 #### Other Request
 
@@ -281,7 +301,9 @@ The flow routed the request through the Other Request path.
 
 ## 8. Evaluation Dataset Generation
 
-The project includes `generate-eval-dataset.py` for automatically executing the test cases against the deployed Bedrock Flow and generating an evaluation dataset.
+The project includes `generate-eval-dataset.py` for automatically executing
+the test cases against the deployed Bedrock Flow and generating an evaluation
+dataset.
 
 The script:
 
@@ -303,34 +325,37 @@ python generate-eval-dataset.py \
   --out-jsonl eval-dataset.jsonl
 ```
 
-The actual Flow ID and Alias ID used for the final deployment are retained in the project configuration and evaluation artifacts.
+The actual Flow ID and Alias ID used for the final deployment are retained in
+the project configuration and evaluation artifacts.
 
 ---
 
 ## 9. Amazon S3
 
-The generated evaluation dataset is uploaded to an Amazon S3 bucket for use by the Bedrock Evaluation workflow.
+The generated evaluation dataset is uploaded to an Amazon S3 bucket for use by
+the Bedrock Evaluation workflow.
 
-The project uses S3 to store evaluation-related data rather than keeping the evaluation dataset only on the local environment.
+The project uses S3 to store evaluation-related data rather than keeping the
+evaluation dataset only in the local environment.
 
-The generated JSONL dataset contains the test prompts, reference responses, and model responses used for evaluation.
+The generated JSONL dataset contains the test prompts, reference responses,
+and model responses used for evaluation.
 
 ---
 
 ## 10. Amazon Bedrock Evaluation
 
-An Amazon Bedrock Evaluation Job was created using the generated evaluation dataset.
+An Amazon Bedrock Evaluation Job was created using the generated evaluation
+dataset.
 
-The evaluation uses an automated **LLM-as-a-judge** approach to compare the chatbot's responses against the expected reference responses.
+The evaluation uses an automated **LLM-as-a-judge** approach to assess the
+generated chatbot responses against the expected reference responses.
 
-The evaluation assessed response quality using metrics including:
+The final evaluation used **Amazon Nova Pro** as the evaluator and the
+`Builtin.Helpfulness` metric.
 
-- **Correctness**
-- **Relevance**
-- **Completeness**
-- **Following Instructions**
-
-The evaluation artifacts generated during the project are included in the repository.
+The evaluation artifacts generated during the project are included in the
+repository.
 
 ---
 
@@ -342,16 +367,45 @@ The final evaluation results are retained in:
 evaluation-results-final.jsonl
 ```
 
-The evaluation covered the major test scenarios:
+The evaluation covered four test scenarios:
 
 - Bug report
 - Covered FAQ question
 - Uncovered FAQ question
 - Other request
 
-The final evaluation results showed strong performance across the tested scenarios.
+### Final Helpfulness Results
 
-The results should be interpreted together with the individual flow execution traces and functional tests rather than being treated as a replacement for functional testing.
+| Test Scenario | Helpfulness Score |
+| :--- | :---: |
+| Bug Report | **0.6667** |
+| Platform FAQ — Password Reset | **0.8333** |
+| Platform FAQ — Uncovered Question | **0.8333** |
+| Other Request | **0.6667** |
+| **Average** | **0.7500** |
+
+### Observations
+
+1. **Bug Report — 0.6667**  
+   The response confirmed that the bug report was created and provided the
+   ticket ID and status. The evaluator noted that it could be more helpful by
+   providing troubleshooting steps or an immediate solution where appropriate.
+
+2. **Platform FAQ — Password Reset — 0.8333**  
+   The response directly answered the customer's question using the FAQ and
+   provided the password-reset procedure.
+
+3. **Platform FAQ — Uncovered Question — 0.8333**  
+   The response correctly stated that the requested information was not
+   available in the FAQ and directed the customer to support.
+
+4. **Other Request — 0.6667**  
+   The response correctly directed the request toward human support. The
+   evaluator noted that it could be more specific to the sponsorship
+   partnership request.
+
+Overall, the four tested scenarios produced an average `Builtin.Helpfulness`
+score of **0.7500**.
 
 ---
 
@@ -394,9 +448,9 @@ behavior across the main request paths.
 ├── online_shop_faq.md
 ├── requirements.txt
 └── screenshots/
-    ├── 01-Flow-diagram.png
-    ├── 02-Bug-report-test.png
-    ├── 03-Bug-report-trace.png
+    ├── 01-flow-classification-routing.png
+    ├── 02-bug-report-trace-overview.png
+    ├── 03-bug-report-lambda-trace.png
     ├── 04-Platform-FAQ-question.png
     ├── 05-Platform-FAQ-uncovered.png
     └── 06-Other-request.png
@@ -420,7 +474,8 @@ behavior across the main request paths.
 
 ## 15. Key Takeaways
 
-This project demonstrates an end-to-end customer-support workflow using Amazon Bedrock Flows.
+This project demonstrates an end-to-end customer-support workflow using
+Amazon Bedrock Flows.
 
 The implementation demonstrates:
 
@@ -435,4 +490,7 @@ The implementation demonstrates:
 - Evaluation dataset generation
 - Amazon S3 integration
 - Amazon Bedrock model evaluation
-The project combines **LLM-based routing with traditional AWS services** to create a structured customer-support workflow with testable and observable execution paths.
+
+The project combines **LLM-based routing with traditional AWS services** to
+create a structured customer-support workflow with testable and observable
+execution paths.
