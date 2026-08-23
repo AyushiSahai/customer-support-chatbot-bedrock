@@ -452,6 +452,8 @@ The evidence includes:
 - DynamoDB `BugReports` table showing a bug-report record created by the chatbot
 - Amazon Bedrock Evaluation job results showing the `Builtin.Helpfulness`
   metric and final score of 0.75
+- Amazon Bedrock Evaluation results showing the `Builtin.Correctness`
+  metric and final score of 1.00
 
 The screenshots provide visual evidence of the implemented flow, backend
 bug-report persistence, and evaluation results across the tested scenarios.
