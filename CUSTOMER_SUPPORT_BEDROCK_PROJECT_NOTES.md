@@ -38,7 +38,7 @@ OTHER:
 ---
 
 ## 3. Flow Architecture
-
+```text
 Customer Query
     ↓
 Flow Input Node
@@ -49,7 +49,7 @@ Condition Node
     ├── BUG → Bug Path → Lambda → DynamoDB
     ├── FAQ → FAQ Prompt
     └── OTHER → Other Request Prompt
-
+```
 ---
 
 ## 4. Classification
