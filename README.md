@@ -384,6 +384,32 @@ The evaluation covered four test scenarios:
 | Other Request | **0.6667** |
 | **Average** | **0.7500** |
 
+### Final Correctness Results
+
+The Bedrock model evaluation was also run using the `Builtin.Correctness`
+metric across the four test scenarios.
+
+| **Metric** | **Score** |
+|-----------|----------:|
+| **Correctness** | **1.00** |
+
+### Correctness Observation
+
+The final evaluation achieved a `Builtin.Correctness` score of **1.00**,
+indicating that the generated responses were evaluated as correct across all
+four test prompts.
+
+The evaluation covered:
+
+- Bug report
+- Covered FAQ question
+- Uncovered FAQ question
+- Other request
+
+The Bedrock Evaluation results page provides visual evidence of the
+`Correctness = 1.00` result in:
+
+`screenshots/10-bedrock-correctness-evaluation.png`
 ### Observations
 
 1. **Bug Report — 0.6667**  
