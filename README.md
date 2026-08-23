@@ -422,13 +422,12 @@ The evidence includes:
 - Platform FAQ response
 - Uncovered FAQ response
 - Other-request routing
-- DynamoDB `BugReports` table showing bug-report records created by the chatbot
+- DynamoDB `BugReports` table showing a bug-report record created by the chatbot
 - Amazon Bedrock Evaluation job results showing the `Builtin.Helpfulness`
   metric and final score of 0.75
 
 The screenshots provide visual evidence of the implemented flow, backend
 bug-report persistence, and evaluation results across the tested scenarios.
-
 ---
 
 ## 13. Project Files
@@ -458,7 +457,8 @@ bug-report persistence, and evaluation results across the tested scenarios.
     ├── 05-Platform-FAQ-uncovered.png
     ├── 06-Other-request.png
     ├── 07-dynamodb-bugreport.png
-    └── 08-bedrock-evaluation-results.png
+    ├── 08-bedrock-evaluation-results.png
+    └── 09-dynamodb-chatbot-ticket.png
 ```
 ---
 
