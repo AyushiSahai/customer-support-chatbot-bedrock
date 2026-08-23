@@ -384,6 +384,29 @@ The evaluation covered four test scenarios:
 | Other Request | **0.6667** |
 | **Average** | **0.7500** |
 
+### Observations
+
+1. **Bug Report — 0.6667**  
+   The response confirmed that the bug report was created and provided the
+   ticket ID and status. The evaluator noted that it could be more helpful by
+   providing troubleshooting steps or an immediate solution where appropriate.
+
+2. **Platform FAQ — Password Reset — 0.8333**  
+   The response directly answered the customer's question using the FAQ and
+   provided the password-reset procedure.
+
+3. **Platform FAQ — Uncovered Question — 0.8333**  
+   The response correctly stated that the requested information was not
+   available in the FAQ and directed the customer to support.
+
+4. **Other Request — 0.6667**  
+   The response correctly directed the request toward human support. The
+   evaluator noted that it could be more specific to the sponsorship
+   partnership request.
+
+Overall, the four tested scenarios produced an average `Builtin.Helpfulness`
+score of **0.7500**.
+
 ### Final Correctness Results
 
 The Bedrock model evaluation was also run using the `Builtin.Correctness`
@@ -410,28 +433,6 @@ The Bedrock Evaluation results page provides visual evidence of the
 `Correctness = 1.00` result in:
 
 `screenshots/10-bedrock-correctness-evaluation.png`
-### Observations
-
-1. **Bug Report — 0.6667**  
-   The response confirmed that the bug report was created and provided the
-   ticket ID and status. The evaluator noted that it could be more helpful by
-   providing troubleshooting steps or an immediate solution where appropriate.
-
-2. **Platform FAQ — Password Reset — 0.8333**  
-   The response directly answered the customer's question using the FAQ and
-   provided the password-reset procedure.
-
-3. **Platform FAQ — Uncovered Question — 0.8333**  
-   The response correctly stated that the requested information was not
-   available in the FAQ and directed the customer to support.
-
-4. **Other Request — 0.6667**  
-   The response correctly directed the request toward human support. The
-   evaluator noted that it could be more specific to the sponsorship
-   partnership request.
-
-Overall, the four tested scenarios produced an average `Builtin.Helpfulness`
-score of **0.7500**.
 
 ---
 
