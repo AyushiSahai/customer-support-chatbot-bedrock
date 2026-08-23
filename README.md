@@ -458,7 +458,8 @@ bug-report persistence, and evaluation results across the tested scenarios.
     ├── 06-Other-request.png
     ├── 07-dynamodb-bugreport.png
     ├── 08-bedrock-evaluation-results.png
-    └── 09-dynamodb-chatbot-ticket.png
+    ├── 09-dynamodb-chatbot-ticket.png
+    └── 10-bedrock-correctness-evaluation.png
 ```
 ---
 
